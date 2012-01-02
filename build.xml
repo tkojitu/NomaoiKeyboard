@@ -1,0 +1,35 @@
+<project name="NomaoiKeyboard" default="compile" basedir=".">
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+
+  <target name="init">
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <javac srcdir="${src}" debug="on" destdir="${build}" includeAntRuntime="no"/>
+  </target>
+
+  <target name="dist" depends="compile">
+    <mkdir dir="${dist}/lib"/>
+    <jar jarfile="${dist}/lib/NomaoiKeyboard.jar" basedir="${build}">
+      <manifest>
+        <attribute name="Main-Class" value="nomaoi.NomaoiKeyboard"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="run" depends="dist">
+    <exec executable="java" dir="${basedir}">
+      <arg value="-jar"/>
+      <arg value="dist/lib/NomaoiKeyboard.jar"/>
+      <arg value="nomaoiKeyboard.rc"/>
+    </exec>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
