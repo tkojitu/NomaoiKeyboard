@@ -9,6 +9,7 @@ class NomaoiModel {
     private Synthesizer synthesizer;
     private MidiChannel channel;
     private ChannelData channelData = new ChannelData();
+    private int note;
 
     public NomaoiModel(ChannelData channelData) {
         if (channelData != null) {
@@ -87,10 +88,12 @@ class NomaoiModel {
     }
 
     public void noteOn(int noteNumber) {
-        channel.noteOn(noteNumber, channelData.velocity);
+        noteOff();
+        note = noteNumber;
+        channel.noteOn(note, channelData.velocity);
     }
 
-    public void noteOff(int noteNumber) {
-        channel.noteOff(noteNumber, channelData.velocity);
+    public void noteOff() {
+        channel.noteOff(note, channelData.velocity);
     }
 }
