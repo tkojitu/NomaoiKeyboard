@@ -5,6 +5,12 @@ import java.awt.Dimension;
 import javax.swing.*;
 
 public class NomaoiKeyboard implements KeyListener, Runnable {
+    private NomaoiModel model;
+
+    public NomaoiKeyboard(NomaoiModel model) {
+        this.model = model;
+    }
+
     public void createAndShowGui() {
         JFrame frame = createFrame();
         frame.setVisible(true);
@@ -38,6 +44,11 @@ public class NomaoiKeyboard implements KeyListener, Runnable {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new NomaoiKeyboard());
+        ChannelData data = null;
+        if (args.length > 0) {
+            data = ChannelData.load(args[0]);
+        }
+        NomaoiModel model = new NomaoiModel(data);
+        SwingUtilities.invokeLater(new NomaoiKeyboard(model));
     }
 }
