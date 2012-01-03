@@ -31,38 +31,38 @@ public class NomaoiKeyboard implements KeyListener, Runnable {
         return pane;
     }
 
-    public void keyPressed(KeyEvent event) {}
-    public void keyReleased(KeyEvent event) {}
-
-    public void keyTyped(KeyEvent event) {
-        char ch = event.getKeyChar();
-        if (ch == ' ') {
+    public void keyPressed(KeyEvent event) {
+        int code = event.getKeyCode();
+        if (code == KeyEvent.VK_SPACE) {
             model.noteOff();
             return;
         }
-        int note = charToNote(ch);
+        int note = keyCodeToNote(code);
         if (note >= 0) {
             model.noteOn(note);
         }
     }
 
-    private int charToNote(char ch) {
-        switch (ch) {
-        case 'd':
+    public void keyReleased(KeyEvent event) {}
+    public void keyTyped(KeyEvent event) {}
+
+    private int keyCodeToNote(int keyCode) {
+        switch (keyCode) {
+        case KeyEvent.VK_D:
             return 60;
-        case 'f':
+        case KeyEvent.VK_F:
             return 62;
-        case 'g':
+        case KeyEvent.VK_G:
             return 64;
-        case 'h':
+        case KeyEvent.VK_H:
             return 65;
-        case 'j':
+        case KeyEvent.VK_J:
             return 67;
-        case 'k':
+        case KeyEvent.VK_K:
             return 69;
-        case 'l':
+        case KeyEvent.VK_L:
             return 71;
-        case ';':
+        case KeyEvent.VK_SEMICOLON:
             return 72;
         default:
             return -1;
