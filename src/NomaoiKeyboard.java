@@ -38,6 +38,7 @@ public class NomaoiKeyboard implements KeyListener, Runnable {
             return;
         }
         int note = keyCodeToNote(code);
+        note = modifyNote(event, note);
         if (note >= 0) {
             model.noteOn(note);
         }
@@ -67,6 +68,21 @@ public class NomaoiKeyboard implements KeyListener, Runnable {
         default:
             return -1;
         }
+    }
+
+    private int modifyNote(KeyEvent event, int note) {
+        int result = note;
+        int modifiers = event.getModifiersEx();
+        if ((modifiers & InputEvent.SHIFT_DOWN_MASK) != 0) {
+            result++;
+        }
+        if ((modifiers & InputEvent.CTRL_DOWN_MASK) != 0) {
+            return result + 12;
+        }
+        if ((modifiers & InputEvent.ALT_DOWN_MASK) != 0) {
+            return result - 12;
+        }
+        return result;
     }
 
     public void run() {
